@@ -2,35 +2,21 @@
   <div>
     <div class="select-box">
       <el-input
-        v-model="name"
+        v-model="input"
         placeholder="请输入姓名/手机号/公司"
         class="name-input"
+        @input="searchName"
       />
-      <el-button @click="isShow = true">添加外部黑名单</el-button>
+      <el-button @click="create">添加外部黑名单</el-button>
     </div>
     <BlackTable :tableData="tableData" @remove="remove" />
-    <el-dialog title="收货地址" :visible.sync="isShow">
-      <el-form :model="form">
-        <el-form-item label="姓名" :label-width="labelWidth">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号" :label-width="labelWidth">
-          <el-input v-model="form.phone" @blur="changeNumber"></el-input>
-        </el-form-item>
-        <el-form-item label="公司" :label-width="labelWidth">
-          <el-input v-model="form.company"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="isShow = false">取消</el-button>
-        <el-button type="primary" @click="isShow = false">确定</el-button>
-      </div>
-    </el-dialog>
+    <CreateDialog ref="create" @addBlackList="addBlackList"/>
   </div>
 </template>
 
 <script>
 import BlackTable from "./blackListTable.vue";
+import CreateDialog from "./createDialog.vue"
 export default {
   data() {
     return {
@@ -74,31 +60,36 @@ export default {
       ],
       isShow: false,
       isBlackShow: false,
-      name: "",
-      dialogFormVisible: false,
-      form: {
-        name: "",
-        phone: "",
-        company: "",
-      },
-      labelWidth: "120px",
+      input: "",
+      timer: null,
     };
   },
   methods: {
     // 移出黑名单
     remove(data) {
-      this.isShow = true;
+      // 展示提示弹窗
       console.log("移除", data);
     },
-    onSubmit(data) {
-      console.log("提交", data);
+    searchName() {
+      if (this.timer !== null) {
+        clearTimeout(this.timer);
+      }
+      this.timer = setTimeout(() => {
+        if (!this.input) return;
+        console.log(this.input);
+      }, 500);
     },
-    changeNumber(){
+    addBlackList(data){
+      console.log(data)
+    },
+    create(){
+      this.$refs.create.changeState()
+    },
 
-    }
   },
   components: {
     BlackTable,
+    CreateDialog
   },
 };
 </script>

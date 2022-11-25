@@ -5,11 +5,11 @@ Vue.use(VueRouter);
 
 const routes = [
     {
-        path:'/blackList',
-        component:()=> import('../pages/blackList/index.vue')
-    },{
-        path:'/userPortrait',
-        component:()=> import('../pages/userPortrait/index.vue')
+        path: '/blackList',
+        component: () => import('../pages/blackList/index.vue')
+    }, {
+        path: '/userPortrait',
+        component: () => import('../pages/userPortrait/index.vue')
     }
 ]
 

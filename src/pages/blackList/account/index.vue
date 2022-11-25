@@ -86,11 +86,13 @@ export default {
     },
     // 移入黑名单
     movein(data) {
+      // 展示提示弹窗
       this.isShow = true;
       console.log("移入黑名单", data);
     },
     // 移出黑名单
     remove(data) {
+      // 展示提示弹窗
       this.isShow = true;
       console.log("移除", data);
     },
